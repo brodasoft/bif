@@ -13,12 +13,22 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 import math
 import os
 
-
 # filelist = glob.glob(r'C:\Users\sahil-sikka\Documents\BIS\newDbr\*.xlsx')
-rawDbr = input("Enter the Raw Data file path (with filename and extension): ")
+"""rawDbr = input("Enter the Raw Data file path (with filename and extension): ")
 refSheet = input("Enter the Reference file path (with filename and extension): ")
 invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
-intermediateFiles = input("Enter the path where you would like to save intermediate files: ")
+intermediateFiles = input("Enter the path where you would like to save intermediate files: ")"""
+
+rawDbr = r'c:\Enron\_Mercer\Py\BIF\_doc\Collated DBR.xlsx'
+refSheet = r'c:\Enron\_Mercer\Py\BIF\_doc\N-R Reference file (CPF database).xlsx'
+invoiceTemplate = r'c:\Enron\_Mercer\Py\BIF\_doc\invoiceFinal.xlsx'
+intermediateFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
+'config from line 311'
+month = 10
+year = 2020
+monyear = r'jun20'
+saveFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
+
 tracker = pd.read_excel(r'{}'.format(refSheet), sheet_name='Sheet4')
 tracker['One'] = tracker['One'].str.strip()
 # file1 = pd.DataFrame()
@@ -29,12 +39,12 @@ file1 = pd.read_excel(r'{}'.format(rawDbr), skiprows=5)
 act = pd.DataFrame()
 act1 = pd.DataFrame()
 act2 = file1[(file1['Transaction Type'] == 'STRAIGHT LINE FIXED FEE') | (file1['Transaction Type'] == 'TIME') | (
-            file1['Transaction Type'] == 'INTERNAL INVOICE') | (file1['Transaction Type'] == 'COMMISSION') | (
-                         file1['Transaction Type'] == 'EXPENSE') | (file1['Transaction Type'] == 'SCHEDULED FIXED FEE')]
+        file1['Transaction Type'] == 'INTERNAL INVOICE') | (file1['Transaction Type'] == 'COMMISSION') | (
+                     file1['Transaction Type'] == 'EXPENSE') | (file1['Transaction Type'] == 'SCHEDULED FIXED FEE')]
 act1 = act1.append(act2, ignore_index=True)
 act1['zzzTraProType'] = act1['Transaction Type'] + '-' + act1['Project Type']
 act3 = act1[(act1['Charge Basis'] == 'T') | (act1['Charge Basis'] == 'S') | (act1['Charge Basis'] == 'C')]
-act4 = act3[act3['zzzTraProType' != "TIME-Scheduled Fixed Fee"]]
+act4 = act3[act3['zzzTraProType'] != "TIME-Scheduled Fixed Fee"]
 act = act.append(act4, ignore_index=True)
 act = act.drop('zzzTraProType', axis=1)
 # writer = pd.ExcelWriter(r'C:\Users\sahil-sikka\Documents\BIS\BIF AUTOMATION\NoN.xlsx')
@@ -303,13 +313,13 @@ alignment = Alignment(wrap_text=True,
                       horizontal='center',
                       vertical='center')
 
-
-
 uni = toUse['One'].unique()
-month = input("Enter Month Number: ")
+
+"""month = input("Enter Month Number: ")
 year = input("Enter Year: ")
 monyear = input("Enter MMM'YY: ")
-saveFiles = input("Enter path where you what to save files (till WEA): ")
+saveFiles = input("Enter path where you what to save files (till WEA): ")"""
+
 tracker['CodeEng'] = tracker['One'].str[4:]
 tracker['Link'] = saveFiles + '\\GOC_' + tracker['One'].str[4:5] + '\\' + tracker['Client Code'] + '\\' + year + '\\' + \
                   tracker['One'].str[4:] + '\\' + month + '_' + year + '\\Sup_Doc\\BIF_DBR_' + tracker['One'].str[
