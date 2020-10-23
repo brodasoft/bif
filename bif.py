@@ -14,22 +14,26 @@ import math
 import os
 from openpyxl.styles import Border, Side, Alignment, Font, PatternFill
 
-
 # filelist = glob.glob(r'C:\Users\sahil-sikka\Documents\BIS\newDbr\*.xlsx')
 """rawDbr = input("Enter the Raw Data file path (with filename and extension): ")
 refSheet = input("Enter the Reference file path (with filename and extension): ")
 invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
 intermediateFiles = input("Enter the path where you would like to save intermediate files: ")"""
 
-rawDbr = r'c:\Users\katarzyna-michalska\Projects\bif\Files\Collated DBR.xlsx'
-refSheet = r'c:\Users\katarzyna-michalska\Projects\bif\Files\N-R Reference file (CPF database).xlsx'
-invoiceTemplate = r'c:\Users\katarzyna-michalska\Projects\bif\Files\invoiceFinal.xlsm'
-intermediateFiles = r'c:\Users\katarzyna-michalska\Projects\bif\Files\Inter'
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+rawDbr = ROOT_DIR + r'\_src\Collated DBR.xlsx'
+refSheet = ROOT_DIR + r'\_src\N-R Reference file (CPF database).xlsx'
+invoiceTemplate = ROOT_DIR + r'\_src\invoiceFinal.xlsm'
+intermediateFiles = ROOT_DIR + r'\_out'
+
 'config from line 311'
 month = '10'
 year = '2020'
 monyear = r'jun20'
-saveFiles = r'c:\Users\katarzyna-michalska\Projects\bif\Files\Output'
+
+saveFiles = ROOT_DIR + r'\_out'
+
 
 tracker = pd.read_excel(r'{}'.format(refSheet), sheet_name='Sheet4')
 tracker['One'] = tracker['One'].str.strip()
