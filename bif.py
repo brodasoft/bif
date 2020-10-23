@@ -21,13 +21,13 @@ refSheet = input("Enter the Reference file path (with filename and extension): "
 invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
 intermediateFiles = input("Enter the path where you would like to save intermediate files: ")"""
 
-rawDbr = r'c:\Enron\_Mercer\Py\BIF\_doc\Collated DBR.xlsx'
-refSheet = r'c:\Enron\_Mercer\Py\BIF\_doc\N-R Reference file (CPF database).xlsx'
-invoiceTemplate = r'c:\Enron\_Mercer\Py\BIF\_doc\invoiceFinal.xlsx'
+rawDbr = r'c:\Enron\_Mercer\Py\BIF\_doc\_cfg\Collated DBR.xlsx'
+refSheet = r'c:\Enron\_Mercer\Py\BIF\_doc\_cfg\N-R Reference file (CPF database).xlsx'
+invoiceTemplate = r'c:\Enron\_Mercer\Py\BIF\_doc\_cfg\invoiceFinal.xlsm'
 intermediateFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
 'config from line 311'
-month = 10
-year = 2020
+month = '10'
+year = '2020'
 monyear = r'jun20'
 saveFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
 
@@ -331,7 +331,7 @@ tracker.to_excel(writer, 'All', index=False)
 writer.save()
 flag = 0
 for i in uni:
-    wb = openpyxl.load_workbook(r'{}'.format(invoiceTemplate))
+    wb = openpyxl.load_workbook(r'{}'.format(invoiceTemplate), read_only=False, keep_vba=True)
     sheet1 = wb["Raw DBR"]
     rawDbr = mnRawDbr[mnRawDbr['One'] == i]
     empty11 = pd.DataFrame()
@@ -617,7 +617,7 @@ for i in uni:
     except FileExistsError:
         print("Directory ", path, " already exists")
 
-    location = r"{}\{}.xlsx".format(path, fileNameToSave)
+    location = r"{}\{}.xlsm".format(path, fileNameToSave)
     wb.save(location)
     # wb.close()
     # with pd.ExcelWriter(location, mode='a') as writerDbr:
