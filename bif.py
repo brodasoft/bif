@@ -23,7 +23,7 @@ intermediateFiles = input("Enter the path where you would like to save intermedi
 
 rawDbr = r'c:\Enron\_Mercer\Py\BIF\_doc\Collated DBR.xlsx'
 refSheet = r'c:\Enron\_Mercer\Py\BIF\_doc\N-R Reference file (CPF database).xlsx'
-invoiceTemplate = r'c:\Enron\_Mercer\Py\BIF\_doc\invoiceFinal.xlsx'
+invoiceTemplate = r'c:\Enron\_Mercer\Py\BIF\_doc\invoiceFinal.xlsm'
 intermediateFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
 'config from line 311'
 month = 10
