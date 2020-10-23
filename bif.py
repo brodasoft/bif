@@ -12,6 +12,8 @@ import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import math
 import os
+from openpyxl.styles import Border, Side, Alignment, Font, PatternFill
+
 
 # filelist = glob.glob(r'C:\Users\sahil-sikka\Documents\BIS\newDbr\*.xlsx')
 """rawDbr = input("Enter the Raw Data file path (with filename and extension): ")
@@ -283,7 +285,7 @@ emptyRaw0n = pd.DataFrame()
 act1RawDbr = act1RawDbr.append(emptyRaw0n, ignore_index=True)
 act1RawDbr['One'] = act1RawDbr['One'].str.strip()
 
-from openpyxl.styles import Border, Side, Alignment, Font, PatternFill
+
 
 font = Font(name='Calibri',
             size=8,
