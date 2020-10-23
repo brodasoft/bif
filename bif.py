@@ -21,15 +21,15 @@ refSheet = input("Enter the Reference file path (with filename and extension): "
 invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
 intermediateFiles = input("Enter the path where you would like to save intermediate files: ")"""
 
-rawDbr = r'c:\Enron\_Mercer\Py\BIF\_doc\_cfg\Collated DBR.xlsx'
-refSheet = r'c:\Enron\_Mercer\Py\BIF\_doc\_cfg\N-R Reference file (CPF database).xlsx'
-invoiceTemplate = r'c:\Enron\_Mercer\Py\BIF\_doc\_cfg\invoiceFinal.xlsm'
-intermediateFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
+rawDbr = r'c:\Users\katarzyna-michalska\Projects\bif\Files\Collated DBR.xlsx'
+refSheet = r'c:\Users\katarzyna-michalska\Projects\bif\Files\N-R Reference file (CPF database).xlsx'
+invoiceTemplate = r'c:\Users\katarzyna-michalska\Projects\bif\Files\invoiceFinal.xlsm'
+intermediateFiles = r'c:\Users\katarzyna-michalska\Projects\bif\Files\Inter'
 'config from line 311'
 month = '10'
 year = '2020'
 monyear = r'jun20'
-saveFiles = r'c:\Enron\_Mercer\Py\BIF\_doc\_out'
+saveFiles = r'c:\Users\katarzyna-michalska\Projects\bif\Files\Output'
 
 tracker = pd.read_excel(r'{}'.format(refSheet), sheet_name='Sheet4')
 tracker['One'] = tracker['One'].str.strip()
@@ -596,6 +596,12 @@ for i in uni:
     sheet["P{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 3)] = "=AD{}/P{}".format(colmend + 2, colmend + 2)
+
+    #hide columns in DBR sheet
+    sht = wb['DBR']
+
+    for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM', 'AN']:
+        sht.column_dimensions[col].hidden = True
 
     # for delet in ['time', 'com', 'rsc', 'ii', 'ex', 'slff']:
     #    del wb[delet]
