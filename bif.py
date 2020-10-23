@@ -20,16 +20,20 @@ refSheet = input("Enter the Reference file path (with filename and extension): "
 invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
 intermediateFiles = input("Enter the path where you would like to save intermediate files: ")"""
 
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 rawDbr = ROOT_DIR + r'\_src\Collated DBR.xlsx'
 refSheet = ROOT_DIR + r'\_src\N-R Reference file (CPF database).xlsx'
 invoiceTemplate = ROOT_DIR + r'\_src\invoiceFinal.xlsm'
 intermediateFiles = ROOT_DIR + r'\_out'
+
 'config from line 311'
 month = '10'
 year = '2020'
 monyear = r'jun20'
+
 saveFiles = ROOT_DIR + r'\_out'
+
 
 tracker = pd.read_excel(r'{}'.format(refSheet), sheet_name='Sheet4')
 tracker['One'] = tracker['One'].str.strip()
@@ -596,6 +600,12 @@ for i in uni:
     sheet["P{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 3)] = "=AD{}/P{}".format(colmend + 2, colmend + 2)
+
+    #hide columns in DBR sheet
+    sht = wb['DBR']
+
+    for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM', 'AN']:
+        sht.column_dimensions[col].hidden = True
 
     # for delet in ['time', 'com', 'rsc', 'ii', 'ex', 'slff']:
     #    del wb[delet]
