@@ -29,7 +29,7 @@ intermediateFiles = ROOT_DIR + r'\_out'
 month = '10'
 year = '2020'
 monyear = r'jun20'
-saveFiles =  ROOT_DIR + r'\_out'
+saveFiles = ROOT_DIR + r'\_out'
 
 tracker = pd.read_excel(r'{}'.format(refSheet), sheet_name='Sheet4')
 tracker['One'] = tracker['One'].str.strip()
