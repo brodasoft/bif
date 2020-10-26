@@ -13,6 +13,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 import math
 import os
 from openpyxl.styles import Border, Side, Alignment, Font, PatternFill
+from openpyxl.worksheet.datavalidation import DataValidation
 
 DEBUG = True
 
@@ -455,6 +456,21 @@ for i in uni:
                 sheet2.cell(row=1 + afterRsc, column=jivar).fill = PatternFill(fill_type="solid", start_color='4f81bd',
                                                                                end_color='4f81bd')
                 sheet2.cell(row=iivar + afterRsc, column=jivar).value = stII.cell(row=iivar, column=jivar).value
+
+    # create validation list
+    dv = DataValidation(type="list", formula1='"Bill,WIP/CF,Transfer,Write-off"')
+    maxrow = sheet2.max_row
+    rangevar = 'AT2:AT' + str(maxrow)
+    sheet2.add_data_validation(dv)
+    dv.add(rangevar)
+
+
+    # add formulas for 4 columns
+    for itrp in list(range(2, maxrow+1)):
+        sheet2["AU{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Write-off"', itrp)
+        sheet2["AV{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"WIP/CF"', itrp)
+        sheet2["AW{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Transfer"', itrp)
+        sheet2["AX{}".format(itrp)] = "=AI{}-AU{}-AV{}-AW{}".format(itrp, itrp, itrp, itrp)
 
     # hide columns in DBR sheet
     for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
