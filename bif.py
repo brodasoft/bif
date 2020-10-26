@@ -601,6 +601,14 @@ for i in uni:
         sheet["AG{}".format(itrp)].font = font
         sheet["AG{}".format(itrp)].alignment = alignment
         sheet["AG{}".format(itrp)].border = thin_border
+        # add getpivot
+        for k in ['R', 'X', 'AA']:
+            sheet["{}{}".format(k, itrp)] = "=GETPIVOTDATA({}3&\"\",'DBR Summary'!$A$1,\"Project No\",F{})*-1".format(k,
+                                                                                                                      itrp)
+        for k in ['S', 'AS']:
+            sheet["{}{}".format(k, itrp)] = "=GETPIVOTDATA({}3&\"\",'DBR Summary'!$A$1,\"Project No\",F{})".format(k,
+                                                                                                                   itrp)
+
     flag = flag + itr
     colm = 9 + itr
     colmend = 7 + itr
@@ -612,6 +620,8 @@ for i in uni:
     sheet["P{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 3)] = "=AD{}/P{}".format(colmend + 2, colmend + 2)
+
+
 
 
     # for delet in ['time', 'com', 'rsc', 'ii', 'ex', 'slff']:
