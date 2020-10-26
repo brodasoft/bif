@@ -29,7 +29,6 @@ else:
     refSheet = ROOT_DIR + r'\_src\N-R Reference file (CPF database).xlsx'
     invoiceTemplate = ROOT_DIR + r'\_src\invoiceFinal.xlsm'
     intermediateFiles = ROOT_DIR + r'\_out'
-
     'config from line 311'
     month = '10'
     year = '2020'
@@ -476,8 +475,12 @@ for i in uni:
     for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
                     'AN']:
         sheet2.column_dimensions[col].hidden = True
-
-
+    # fill empty columns name
+    dct = {'AQ': 'AQ', 'AT': 'ACTION (Required) Select from drop down list', 'AU': 'If write-off please enter £ amount',
+           'AV': 'If WIP/CF please enter £ amount', 'AW': 'If transfer please enter £ amount', 'AX': 'Amount to be billed',
+           'AY': 'If transfer please enter details of receiving code'}
+    for key in dct:
+        sheet2["{}1".format(key)] = dct[key]
 
     sheet = wb["Billing Instructions"]
     ne = toUse[toUse['One'] == i]
