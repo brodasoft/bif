@@ -14,25 +14,26 @@ import math
 import os
 from openpyxl.styles import Border, Side, Alignment, Font, PatternFill
 
+DEBUG = True
+
+if not DEBUG:
 # filelist = glob.glob(r'C:\Users\sahil-sikka\Documents\BIS\newDbr\*.xlsx')
-"""rawDbr = input("Enter the Raw Data file path (with filename and extension): ")
-refSheet = input("Enter the Reference file path (with filename and extension): ")
-invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
-intermediateFiles = input("Enter the path where you would like to save intermediate files: ")"""
+    rawDbr = input("Enter the Raw Data file path (with filename and extension): ")
+    refSheet = input("Enter the Reference file path (with filename and extension): ")
+    invoiceTemplate = input("Enter the Invoice Template path (with filename and extension): ")
+    intermediateFiles = input("Enter the path where you would like to save intermediate files: ")
+else:
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    rawDbr = ROOT_DIR + r'\_src\Collated DBR.xlsx'
+    refSheet = ROOT_DIR + r'\_src\N-R Reference file (CPF database).xlsx'
+    invoiceTemplate = ROOT_DIR + r'\_src\invoiceFinal.xlsm'
+    intermediateFiles = ROOT_DIR + r'\_out'
 
-
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-rawDbr = ROOT_DIR + r'\_src\Collated DBR.xlsx'
-refSheet = ROOT_DIR + r'\_src\N-R Reference file (CPF database).xlsx'
-invoiceTemplate = ROOT_DIR + r'\_src\invoiceFinal.xlsm'
-intermediateFiles = ROOT_DIR + r'\_out'
-
-'config from line 311'
-month = '10'
-year = '2020'
-monyear = r'jun20'
-
-saveFiles = ROOT_DIR + r'\_out'
+    'config from line 311'
+    month = '10'
+    year = '2020'
+    monyear = r'jun20'
+    saveFiles = ROOT_DIR + r'\_out'
 
 
 tracker = pd.read_excel(r'{}'.format(refSheet), sheet_name='Sheet4')
@@ -321,10 +322,11 @@ alignment = Alignment(wrap_text=True,
 
 uni = toUse['One'].unique()
 
-"""month = input("Enter Month Number: ")
-year = input("Enter Year: ")
-monyear = input("Enter MMM'YY: ")
-saveFiles = input("Enter path where you what to save files (till WEA): ")"""
+if not DEBUG:
+    month = input("Enter Month Number: ")
+    year = input("Enter Year: ")
+    monyear = input("Enter MMM'YY: ")
+    saveFiles = input("Enter path where you what to save files (till WEA): ")
 
 tracker['CodeEng'] = tracker['One'].str[4:]
 tracker['Link'] = saveFiles + '\\GOC_' + tracker['One'].str[4:5] + '\\' + tracker['Client Code'] + '\\' + year + '\\' + \
