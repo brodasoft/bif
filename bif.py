@@ -566,57 +566,24 @@ for i in uni:
         sheet["AD{}".format(itrp)].border = thin_border
         sheet["AD{}".format(itrp)].number_format = '£#,##0.00'
         sheet["AD{}".format(itrp)].fill = PatternFill(fill_type="solid", start_color='DCE6F1', end_color='DCE6F1')
-        sheet["O{}".format(itrp)].font = font
-        sheet["O{}".format(itrp)].alignment = alignment
-        sheet["O{}".format(itrp)].border = thin_border
-        sheet["Q{}".format(itrp)].font = font
-        sheet["Q{}".format(itrp)].alignment = alignment
-        sheet["Q{}".format(itrp)].border = thin_border
-        sheet["R{}".format(itrp)].font = font
-        sheet["R{}".format(itrp)].alignment = alignment
-        sheet["R{}".format(itrp)].border = thin_border
-        sheet["S{}".format(itrp)].font = font
-        sheet["S{}".format(itrp)].alignment = alignment
-        sheet["S{}".format(itrp)].border = thin_border
-        sheet["T{}".format(itrp)].font = font
-        sheet["T{}".format(itrp)].alignment = alignment
-        sheet["T{}".format(itrp)].border = thin_border
-        sheet["U{}".format(itrp)].font = font
-        sheet["U{}".format(itrp)].alignment = alignment
-        sheet["U{}".format(itrp)].border = thin_border
-        sheet["V{}".format(itrp)].font = font
-        sheet["V{}".format(itrp)].alignment = alignment
-        sheet["V{}".format(itrp)].border = thin_border
-        sheet["W{}".format(itrp)].font = font
-        sheet["W{}".format(itrp)].alignment = alignment
-        sheet["W{}".format(itrp)].border = thin_border
-        sheet["X{}".format(itrp)].font = font
-        sheet["X{}".format(itrp)].alignment = alignment
-        sheet["X{}".format(itrp)].border = thin_border
-        sheet["Y{}".format(itrp)].font = font
-        sheet["Y{}".format(itrp)].alignment = alignment
-        sheet["Y{}".format(itrp)].border = thin_border
-        sheet["Z{}".format(itrp)].font = font
-        sheet["Z{}".format(itrp)].alignment = alignment
-        sheet["Z{}".format(itrp)].border = thin_border
-        sheet["AA{}".format(itrp)].font = font
-        sheet["AA{}".format(itrp)].alignment = alignment
-        sheet["AA{}".format(itrp)].border = thin_border
-        sheet["AB{}".format(itrp)].font = font
-        sheet["AB{}".format(itrp)].alignment = alignment
-        sheet["AB{}".format(itrp)].border = thin_border
-        sheet["AC{}".format(itrp)].font = font
-        sheet["AC{}".format(itrp)].alignment = alignment
-        sheet["AC{}".format(itrp)].border = thin_border
-        sheet["AE{}".format(itrp)].font = font
-        sheet["AE{}".format(itrp)].alignment = alignment
-        sheet["AE{}".format(itrp)].border = thin_border
-        sheet["AF{}".format(itrp)].font = font
-        sheet["AF{}".format(itrp)].alignment = alignment
-        sheet["AF{}".format(itrp)].border = thin_border
-        sheet["AG{}".format(itrp)].font = font
-        sheet["AG{}".format(itrp)].alignment = alignment
-        sheet["AG{}".format(itrp)].border = thin_border
+
+        # fix formating
+        for k in ['O', 'Q', 'S','T','U','V','W','Y','Z','AB','AC','AE','AF','AG']:
+            sheet["{}{}".format(k, itrp)] .font = font
+            sheet["{}{}".format(k, itrp)] .alignment = alignment
+            sheet["{}{}".format(k, itrp)] .border = thin_border
+        # add getpivot
+        for k in ['R', 'X', 'AA']:
+            sheet["{}{}".format(k, itrp)] = "=GETPIVOTDATA({}3&\"\",'DBR Summary'!$A$1,\"Project No\",F{})*-1".format(k, itrp)
+            sheet["{}{}".format(k, itrp)] .font = font
+            sheet["{}{}".format(k, itrp)] .alignment = alignment
+            sheet["{}{}".format(k, itrp)] .border = thin_border
+        for k in ['S', 'AD']:
+            sheet["{}{}".format(k, itrp)] = "=GETPIVOTDATA({}3&\"\",'DBR Summary'!$A$1,\"Project No\",F{})".format(k, itrp)
+            sheet["{}{}".format(k, itrp)] .font = font
+            sheet["{}{}".format(k, itrp)] .alignment = alignment
+            sheet["{}{}".format(k, itrp)] .border = thin_border
+
     flag = flag + itr
     colm = 9 + itr
     colmend = 7 + itr
@@ -628,7 +595,6 @@ for i in uni:
     sheet["P{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 3)] = "=AD{}/P{}".format(colmend + 2, colmend + 2)
-
 
     # for delet in ['time', 'com', 'rsc', 'ii', 'ex', 'slff']:
     #    del wb[delet]
