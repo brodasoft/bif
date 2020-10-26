@@ -454,6 +454,13 @@ for i in uni:
                                                                                end_color='4f81bd')
                 sheet2.cell(row=iivar + afterRsc, column=jivar).value = stII.cell(row=iivar, column=jivar).value
 
+    # hide columns in DBR sheet
+    for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
+                    'AN']:
+    sheet2.column_dimensions[col].hidden = True
+
+
+
     sheet = wb["Billing Instructions"]
     ne = toUse[toUse['One'] == i]
     itr = len(ne['One'])
@@ -601,11 +608,6 @@ for i in uni:
     sheet["AD{}".format(colmend + 1)] = None
     sheet["AD{}".format(colmend + 3)] = "=AD{}/P{}".format(colmend + 2, colmend + 2)
 
-    #hide columns in DBR sheet
-    sht = wb['DBR']
-
-    for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM', 'AN']:
-        sht.column_dimensions[col].hidden = True
 
     # for delet in ['time', 'com', 'rsc', 'ii', 'ex', 'slff']:
     #    del wb[delet]
