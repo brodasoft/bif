@@ -457,7 +457,7 @@ for i in uni:
     # hide columns in DBR sheet
     for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
                     'AN']:
-    sheet2.column_dimensions[col].hidden = True
+        sheet2.column_dimensions[col].hidden = True
 
 
 
