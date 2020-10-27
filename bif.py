@@ -471,6 +471,18 @@ for i in uni:
         sheet2["AW{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Transfer"', itrp)
         sheet2["AX{}".format(itrp)] = "=AI{}-AU{}-AV{}-AW{}".format(itrp, itrp, itrp, itrp)
 
+    # add summarize
+    sheet2['AU{}'.format(maxrow + 2)] = "=SUM(AU2:AU{})".format(maxrow)
+    sheet2['AV{}'.format(maxrow + 2)] = "=SUM(AV2:AV{})".format(maxrow)
+    sheet2['AW{}'.format(maxrow + 2)] = "=SUM(AW2:AW{})".format(maxrow)
+    sheet2['AX{}'.format(maxrow + 2)] = "=SUM(AX2:AX{})".format(maxrow)
+    sheet2['AW{}'.format(maxrow + 6)] = 'Grand Total'
+    sheet2['AW{}'.format(maxrow + 8)] = 'TOTAL ON BIF'
+    sheet2['AW{}'.format(maxrow + 9)] = 'CHECK'
+
+    sheet2['AX{}'.format(maxrow + 6)] = "=SUM(AU{}:AX{})".format(maxrow + 2, maxrow + 2)
+    sheet2['AX{}'.format(maxrow + 9)] = "=IF(AX{}=AX{},{},{})".format(maxrow + 6, maxrow + 8, '"OK"', '"CHECK"')
+
     # hide columns in DBR sheet
     for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
                     'AN']:
