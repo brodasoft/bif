@@ -444,11 +444,11 @@ def main_fnc():
         sheet2['AX{}'.format(maxrow + 8)] = "='Billing Instructions'!P{}".format(9 + itr)
         sheet2['AX{}'.format(maxrow + 9)] = "=IF(AX{}=AX{},{},{})".format(maxrow + 6, maxrow + 8, '"OK"', '"CHECK"')
 
-        for col in ['AU','AV','AU','AU']:
+        for col in ['AU', 'AV', 'AW', 'AX']:
             sheet2['{}{}'.format(col, maxrow + 2)].border = exc_format.thin_border()
             sheet2['{}{}'.format(col, maxrow + 2)].font = exc_format.font_red()
 
-        for row in [6,8,9]:
+        for row in [6, 8, 9]:
             sheet2['AW{}'.format(maxrow + row)].border = exc_format.thin_border()
             sheet2['AX{}'.format(maxrow + row)].border = exc_format.thin_border()
             sheet2['AX{}'.format(maxrow + row)].font = exc_format.font_red()
@@ -635,6 +635,7 @@ def add_data(sheet2, frst_row):
         sheet2["AV{}".format(itrp)].border = exc_format.thin_border()
         sheet2["AW{}".format(itrp)].border = exc_format.thin_border()
         sheet2["AX{}".format(itrp)].border = exc_format.thin_border()
+        sheet2["AY{}".format(itrp)].border = exc_format.thin_border()
 
 
 class ExcFormat:
