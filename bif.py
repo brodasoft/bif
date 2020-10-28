@@ -13,6 +13,7 @@ import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import Border, Side, Alignment, Font, PatternFill
 from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.styles.protection import Protection
 
 def main_fnc():
 
@@ -462,6 +463,11 @@ def main_fnc():
                     'AN']:
             sheet2.column_dimensions[col].hidden = True
 
+        # set sheet protection
+        sheet2.protection.sheet = True
+        for col in ['AT', 'AY']:
+            for row in range(2, sheet2.max_row - 9):
+                sheet2["{}{}".format(col, row)].protection = Protection(locked=False, hidden=False)
 
         sheet = wb["Billing Instructions"]
         sheet.insert_rows(idx=8, amount=itr)
@@ -577,6 +583,9 @@ def main_fnc():
         sheet["P{}".format(colmend + 1)] = None
         sheet["AD{}".format(colmend + 1)] = None
         sheet["AD{}".format(colmend + 3)] = "=AD{}/P{}".format(colmend + 2, colmend + 2)
+
+
+
 
         # for delet in ['time', 'com', 'rsc', 'ii', 'ex', 'slff']:
         #    del wb[delet]
