@@ -444,6 +444,16 @@ def main_fnc():
         sheet2['AX{}'.format(maxrow + 8)] = "='Billing Instructions'!P{}".format(9 + itr)
         sheet2['AX{}'.format(maxrow + 9)] = "=IF(AX{}=AX{},{},{})".format(maxrow + 6, maxrow + 8, '"OK"', '"CHECK"')
 
+        for col in ['AU','AV','AU','AU']:
+            sheet2['{}{}'.format(col, maxrow + 2)].border = exc_format.thin_border()
+            sheet2['{}{}'.format(col, maxrow + 2)].font = exc_format.font_red()
+
+        for row in [6,8,9]:
+            sheet2['AW{}'.format(maxrow + row)].border = exc_format.thin_border()
+            sheet2['AX{}'.format(maxrow + row)].border = exc_format.thin_border()
+            sheet2['AX{}'.format(maxrow + row)].font = exc_format.font_red()
+
+
         wb["WRITE-OFF FORM"]["C14"] = "='Billing Instructions'!V{}+'Billing Instructions'!X{}".format(9 + itr,
                                                                                                       9 + itr)
 
@@ -621,6 +631,10 @@ def add_data(sheet2, frst_row):
         sheet2["AV{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"WIP/CF"', itrp)
         sheet2["AW{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Transfer"', itrp)
         sheet2["AX{}".format(itrp)] = "=AI{}-AU{}-AV{}-AW{}".format(itrp, itrp, itrp, itrp)
+        sheet2["AU{}".format(itrp)].border = exc_format.thin_border()
+        sheet2["AV{}".format(itrp)].border = exc_format.thin_border()
+        sheet2["AW{}".format(itrp)].border = exc_format.thin_border()
+        sheet2["AX{}".format(itrp)].border = exc_format.thin_border()
 
 
 class ExcFormat:
@@ -644,6 +658,15 @@ class ExcFormat:
                      underline='none',
                      strike=False,
                      color='FFFFFFFF')
+    def font_red(self):
+        return Font(name='Calibri',
+                     size=11,
+                     bold=False,
+                     italic=False,
+                     vertAlign=None,
+                     underline='none',
+                     strike=False,
+                     color='f54248')
 
     def thin_border(self):
         return Border(left=Side(style='thin'),
