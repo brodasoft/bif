@@ -456,13 +456,26 @@ for i in uni:
                                                                                end_color='4f81bd')
                 sheet2.cell(row=iivar + afterRsc, column=jivar).value = stII.cell(row=iivar, column=jivar).value
 
-    # create validation list
+    # fill empty columns name
+    dct = {'AQ': 'AQ', 'AT': 'ACTION (Required) Select from drop down list', 'AU': 'If write-off please enter £ amount',
+           'AV': 'If WIP/CF please enter £ amount', 'AW': 'If transfer please enter £ amount', 'AX': 'Amount to be billed',
+           'AY': 'If transfer please enter details of receiving code'}
+    for key in dct:
+        sheet2["{}1".format(key)] = dct[key]
+        sheet2["{}1".format(key)].font = fontWhite
+        sheet2["{}1".format(key)].fill = PatternFill(fill_type="solid", start_color='4f81bd',
+                                                                               end_color='4f81bd')
+
+        # create validation list
     dv = DataValidation(type="list", formula1='"Bill,WIP/CF,Transfer,Write-off"')
     maxrow = sheet2.max_row
     rangevar = 'AT2:AT' + str(maxrow)
     sheet2.add_data_validation(dv)
     dv.add(rangevar)
 
+    #Rows count for Billing Instructions
+    ne = toUse[toUse['One'] == i]
+    itr = len(ne['One'])
 
     # add formulas for 4 columns
     for itrp in list(range(2, maxrow+1)):
@@ -479,24 +492,22 @@ for i in uni:
     sheet2['AW{}'.format(maxrow + 6)] = 'Grand Total'
     sheet2['AW{}'.format(maxrow + 8)] = 'TOTAL ON BIF'
     sheet2['AW{}'.format(maxrow + 9)] = 'CHECK'
-
     sheet2['AX{}'.format(maxrow + 6)] = "=SUM(AU{}:AX{})".format(maxrow + 2, maxrow + 2)
+    sheet2['AX{}'.format(maxrow + 8)] = "='Billing Instructions'!P{}".format(9 + itr)
     sheet2['AX{}'.format(maxrow + 9)] = "=IF(AX{}=AX{},{},{})".format(maxrow + 6, maxrow + 8, '"OK"', '"CHECK"')
+
+    # sheet2['AU{}:AX{}'.format(maxrow + 2, maxrow + 2)].fill = PatternFill(fill_type="solid", start_color='4f81bd', end_color='4f81bd')
+    # sheet2['AW{}:AX{}'.format(maxrow + 6, maxrow + 9)].fill = PatternFill(fill_type="solid", start_color='4f81bd', end_color='4f81bd')
+
 
     # hide columns in DBR sheet
     for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
                     'AN']:
         sheet2.column_dimensions[col].hidden = True
-    # fill empty columns name
-    dct = {'AQ': 'AQ', 'AT': 'ACTION (Required) Select from drop down list', 'AU': 'If write-off please enter £ amount',
-           'AV': 'If WIP/CF please enter £ amount', 'AW': 'If transfer please enter £ amount', 'AX': 'Amount to be billed',
-           'AY': 'If transfer please enter details of receiving code'}
-    for key in dct:
-        sheet2["{}1".format(key)] = dct[key]
+
+    wb["WRITE-OFF FORM"]["C14"] = "='Billing Instructions'!V{}+'Billing Instructions'!X{}".format(9 + itr, 9 + itr)
 
     sheet = wb["Billing Instructions"]
-    ne = toUse[toUse['One'] == i]
-    itr = len(ne['One'])
     sheet.insert_rows(idx=8, amount=itr)
     for j in range(itr):
         itrp = 8 + j
