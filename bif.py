@@ -405,6 +405,7 @@ for i in uni:
                 sheet2.cell(row=1, column=jtvar).fill = PatternFill(fill_type="solid", start_color='4f81bd',
                                                                     end_color='4f81bd')
                 sheet2.cell(row=itvar, column=jtvar).value = stTime.cell(row=itvar, column=jtvar).value
+        add_data(sheet2,itvar)
 
     afterTime = sheet2.max_row + 2
     if (stSlff.max_row > 1):
@@ -456,49 +457,11 @@ for i in uni:
                                                                                end_color='4f81bd')
                 sheet2.cell(row=iivar + afterRsc, column=jivar).value = stII.cell(row=iivar, column=jivar).value
 
-    # fill empty columns name
-    dct = {'AQ': 'AQ', 'AT': 'ACTION (Required) Select from drop down list', 'AU': 'If write-off please enter £ amount',
-           'AV': 'If WIP/CF please enter £ amount', 'AW': 'If transfer please enter £ amount', 'AX': 'Amount to be billed',
-           'AY': 'If transfer please enter details of receiving code'}
-    for key in dct:
-        sheet2["{}1".format(key)] = dct[key]
-        sheet2["{}1".format(key)].font = fontWhite
-        sheet2["{}1".format(key)].fill = PatternFill(fill_type="solid", start_color='4f81bd',
-                                                                               end_color='4f81bd')
 
-        # create validation list
-    dv = DataValidation(type="list", formula1='"Bill,WIP/CF,Transfer,Write-off"')
-    maxrow = sheet2.max_row
-    rangevar = 'AT2:AT' + str(maxrow)
-    sheet2.add_data_validation(dv)
-    dv.add(rangevar)
 
     #Rows count for Billing Instructions
     ne = toUse[toUse['One'] == i]
     itr = len(ne['One'])
-
-    # add formulas for 4 columns
-    for itrp in list(range(2, maxrow+1)):
-        sheet2["AU{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Write-off"', itrp)
-        sheet2["AV{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"WIP/CF"', itrp)
-        sheet2["AW{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Transfer"', itrp)
-        sheet2["AX{}".format(itrp)] = "=AI{}-AU{}-AV{}-AW{}".format(itrp, itrp, itrp, itrp)
-
-    # add summarize
-    sheet2['AU{}'.format(maxrow + 2)] = "=SUM(AU2:AU{})".format(maxrow)
-    sheet2['AV{}'.format(maxrow + 2)] = "=SUM(AV2:AV{})".format(maxrow)
-    sheet2['AW{}'.format(maxrow + 2)] = "=SUM(AW2:AW{})".format(maxrow)
-    sheet2['AX{}'.format(maxrow + 2)] = "=SUM(AX2:AX{})".format(maxrow)
-    sheet2['AW{}'.format(maxrow + 6)] = 'Grand Total'
-    sheet2['AW{}'.format(maxrow + 8)] = 'TOTAL ON BIF'
-    sheet2['AW{}'.format(maxrow + 9)] = 'CHECK'
-    sheet2['AX{}'.format(maxrow + 6)] = "=SUM(AU{}:AX{})".format(maxrow + 2, maxrow + 2)
-    sheet2['AX{}'.format(maxrow + 8)] = "='Billing Instructions'!P{}".format(9 + itr)
-    sheet2['AX{}'.format(maxrow + 9)] = "=IF(AX{}=AX{},{},{})".format(maxrow + 6, maxrow + 8, '"OK"', '"CHECK"')
-
-    # sheet2['AU{}:AX{}'.format(maxrow + 2, maxrow + 2)].fill = PatternFill(fill_type="solid", start_color='4f81bd', end_color='4f81bd')
-    # sheet2['AW{}:AX{}'.format(maxrow + 6, maxrow + 9)].fill = PatternFill(fill_type="solid", start_color='4f81bd', end_color='4f81bd')
-
 
     # hide columns in DBR sheet
     for col in ['B', 'C', 'D', 'F', 'G', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'AE', 'AF', 'AG', 'AH', 'AL', 'AM',
@@ -645,3 +608,45 @@ for i in uni:
     # with pd.ExcelWriter(location, mode='a') as writerDbr:
     #   rawDbr.to_excel(writerDbr,sheet_name = 'DBR', index = False, startrow = 7, header = False)
     # writerDbr.save()
+
+
+def add_data(sh, frs_row):
+    # fill empty columns name
+    dct = {'AQ': 'AQ', 'AT': 'ACTION (Required) Select from drop down list', 'AU': 'If write-off please enter £ amount',
+           'AV': 'If WIP/CF please enter £ amount', 'AW': 'If transfer please enter £ amount',
+           'AX': 'Amount to be billed',
+           'AY': 'If transfer please enter details of receiving code'}
+    for key in dct:
+        sheet2["{}1".format(key)] = dct[key]
+        sheet2["{}1".format(key)].font = fontWhite
+        sheet2["{}1".format(key)].fill = PatternFill(fill_type="solid", start_color='4f81bd',
+                                                     end_color='4f81bd')
+
+        # create validation list
+    dv = DataValidation(type="list", formula1='"Bill,WIP/CF,Transfer,Write-off"')
+    maxrow = sheet2.max_row
+    rangevar = 'AT2:AT' + str(maxrow)
+    sheet2.add_data_validation(dv)
+    dv.add(rangevar)
+
+ # add formulas for 4 columns
+    for itrp in list(range(2, maxrow+1)):
+        sheet2["AU{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Write-off"', itrp)
+        sheet2["AV{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"WIP/CF"', itrp)
+        sheet2["AW{}".format(itrp)] = "=IF(AT{}={},AI{},0)".format(itrp, '"Transfer"', itrp)
+        sheet2["AX{}".format(itrp)] = "=AI{}-AU{}-AV{}-AW{}".format(itrp, itrp, itrp, itrp)
+
+    # add summarize
+    sheet2['AU{}'.format(maxrow + 2)] = "=SUM(AU2:AU{})".format(maxrow)
+    sheet2['AV{}'.format(maxrow + 2)] = "=SUM(AV2:AV{})".format(maxrow)
+    sheet2['AW{}'.format(maxrow + 2)] = "=SUM(AW2:AW{})".format(maxrow)
+    sheet2['AX{}'.format(maxrow + 2)] = "=SUM(AX2:AX{})".format(maxrow)
+    sheet2['AW{}'.format(maxrow + 6)] = 'Grand Total'
+    sheet2['AW{}'.format(maxrow + 8)] = 'TOTAL ON BIF'
+    sheet2['AW{}'.format(maxrow + 9)] = 'CHECK'
+    sheet2['AX{}'.format(maxrow + 6)] = "=SUM(AU{}:AX{})".format(maxrow + 2, maxrow + 2)
+    sheet2['AX{}'.format(maxrow + 8)] = "='Billing Instructions'!P{}".format(9 + itr)
+    sheet2['AX{}'.format(maxrow + 9)] = "=IF(AX{}=AX{},{},{})".format(maxrow + 6, maxrow + 8, '"OK"', '"CHECK"')
+
+    # sheet2['AU{}:AX{}'.format(maxrow + 2, maxrow + 2)].fill = PatternFill(fill_type="solid", start_color='4f81bd', end_color='4f81bd')
+    # sheet2['AW{}:AX{}'.format(maxrow + 6, maxrow + 9)].fill = PatternFill(fill_type="solid", start_color='4f81bd', end_color='4f81bd')
